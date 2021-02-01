@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
+const fs = require('fs');
 
 // data parsing
 app.use(bodyParser.json());
@@ -16,7 +17,16 @@ app.get('/notes', (req, res) => res.sendFile(path.join(__dirname, './Develop/pub
 
 //api routes
 
-app.post('/api/notes', (req, res) => console.log(req));
+app.post('/api/notes', (req, res) => {
+  console.log(req.body)
+  const raw = fs.readFileSync(path.resolve(__dirname, './Develop/db/db.json'));
+  const noteArr = JSON.parse(raw);
+  console.log(noteArr);
+  noteArr.push(req.body);
+  console.log(noteArr);
+  const data = JSON.stringify(noteArr);
+  fs.writeFileSync('./Develop/db/db.json', data, function(err) {console.log(err)});
+});
 
 // PORT
 const PORT = 3000;
