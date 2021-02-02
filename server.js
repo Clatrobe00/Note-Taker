@@ -43,6 +43,10 @@ app.delete(`/api/notes/:id`, (req, res) => {
   const rawNotes = fs.readFileSync(path.resolve(__dirname, './Develop/db/db.json'));
   const noteArrDel = JSON.parse(rawNotes);
   console.log(req.params);
+  const delNote = noteArrDel.filter(note => note.id !== req.params.id);
+  console.log(delNote);
+  fs.writeFileSync('./Develop/db/db.json', JSON.stringify(delNote), function(err) {console.log(err)});
+
   //console.log(noteArrDel);
 })
 
