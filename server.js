@@ -50,6 +50,20 @@ app.delete(`/api/notes/:id`, (req, res) => {
   //console.log(noteArrDel);
 })
 
+// update note
+// app.put(`/api/notes/:id`, (req, res) => {
+//   const rawNotes = fs.readFileSync(path.resolve(__dirname, './Develop/db/db.json'));
+//   const updateNote = JSON.parse(rawNotes);
+//   console.log(req.params);
+//   const upNote = updateNote.map(note => {
+//     if (note.id === req.params.id) {
+//       updateNote.splice(note, 1, req.params);
+//     }
+//   });
+//   console.log(delNote);
+//   fs.writeFileSync('./Develop/db/db.json', JSON.stringify(upNote), function(err) {console.log(err)})
+// });
+
 // PORT
 const PORT = 3000;
 
@@ -72,5 +86,5 @@ app.listen(PORT, () => {
   // ADD the new note to the db.json DONE
 // get route to get all notes DONE
 // put route to update a note (app.put()) 
-// delete route to delete a note
-// invoke listen function on express app
+// delete route to delete a note DONE
+// invoke listen function on express app DONE
