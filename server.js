@@ -65,9 +65,9 @@ app.delete(`/api/notes/:id`, (req, res) => {
 // });
 
 // PORT
-const PORT = 3000;
+const localPORT = 3000;
 
-app.listen(PORT, () => {
+app.listen((process.env.PORT || localPORT), () => {
    console.log(`Server is running on PORT: ${PORT}`);
 });
 
