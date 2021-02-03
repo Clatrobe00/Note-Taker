@@ -11,12 +11,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('./Develop/public'))
 
 // html routes
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, './Develop/public/index.html'));
-});
-app.get('/notes', (req, res) => {
-  res.sendFile(path.join(__dirname, './Develop/public/notes.html'));
-});
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, './Develop/public/index.html')));
+app.get('/notes', (req, res) => res.sendFile(path.join(__dirname, './Develop/public/notes.html')));
 
 //api routes
 app.post('/api/notes', (req, res) => {
@@ -25,8 +21,7 @@ app.post('/api/notes', (req, res) => {
   const raw = fs.readFileSync(path.resolve(__dirname, './Develop/db/db.json'));
   const noteArr = JSON.parse(raw);
   noteArr.push(req.body);
-  const data = JSON.stringify(noteArr);
-  fs.writeFileSync('./Develop/db/db.json', data, function(err) {console.log(err)});
+  fs.writeFileSync('./Develop/db/db.json', JSON.stringify(noteArr), function(err) {console.log(err)});
   res.end();
 });
 
@@ -49,6 +44,4 @@ app.delete(`/api/notes/:id`, (req, res) => {
 // PORT
 const localPORT = 3000;
 
-app.listen((process.env.PORT || localPORT), () => {
-   console.log(`Server is running on PORT`);
-});
+app.listen((process.env.PORT || localPORT), () => console.log(`Server is running on PORT`));
