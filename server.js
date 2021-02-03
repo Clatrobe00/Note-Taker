@@ -10,18 +10,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('./Develop/public'))
 
-
 // html routes
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, './Develop/public/index.html')));
-
-app.get('/notes', (req, res) => res.sendFile(path.join(__dirname, './Develop/public/notes.html')));
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, './Develop/public/index.html'));
+});
+app.get('/notes', (req, res) => {
+  res.sendFile(path.join(__dirname, './Develop/public/notes.html'));
+});
 
 //api routes
-
 app.post('/api/notes', (req, res) => {
   const body = req.body;
   body.id = uuidv4();
-  console.log(body.id);
   const raw = fs.readFileSync(path.resolve(__dirname, './Develop/db/db.json'));
   const noteArr = JSON.parse(raw);
   noteArr.push(req.body);
@@ -31,39 +31,20 @@ app.post('/api/notes', (req, res) => {
 });
 
 // get all notes
-
 app.get('/api/notes', (req, res) => {
   const rawNotes = fs.readFileSync(path.resolve(__dirname, './Develop/db/db.json'));
   res.send(rawNotes);
-  //console.log(rawNotes);
-})
+  res.end();
+});
 
 // delete note
-
 app.delete(`/api/notes/:id`, (req, res) => {
   const rawNotes = fs.readFileSync(path.resolve(__dirname, './Develop/db/db.json'));
   const noteArrDel = JSON.parse(rawNotes);
-  console.log(req.params);
   const delNote = noteArrDel.filter(note => note.id !== req.params.id);
-  console.log(delNote);
   fs.writeFileSync('./Develop/db/db.json', JSON.stringify(delNote), function(err) {console.log(err)});
   res.end();
-  //console.log(noteArrDel);
-})
-
-// update note
-// app.put(`/api/notes/:id`, (req, res) => {
-//   const rawNotes = fs.readFileSync(path.resolve(__dirname, './Develop/db/db.json'));
-//   const updateNote = JSON.parse(rawNotes);
-//   console.log(req.params);
-//   const upNote = updateNote.map(note => {
-//     if (note.id === req.params.id) {
-//       updateNote.splice(note, 1, req.params);
-//     }
-//   });
-//   console.log(delNote);
-//   fs.writeFileSync('./Develop/db/db.json', JSON.stringify(upNote), function(err) {console.log(err)})
-// });
+});
 
 // PORT
 const localPORT = 3000;
@@ -71,21 +52,3 @@ const localPORT = 3000;
 app.listen((process.env.PORT || localPORT), () => {
    console.log(`Server is running on PORT`);
 });
-
-
-//PSEUDOCODE
-// add express server DONE
-// create express app  DONE
-// include midleware to parse json DONE
-// html routes (routes that will serve websites) DONE
-//define landing page route  DONE
-  // use index.html inside public folder DONE
-// note page route DONE
-  // use notes.html inside public folder DONE
-//API routes 
-// post route to save a note DONE
-  // ADD the new note to the db.json DONE
-// get route to get all notes DONE
-// put route to update a note (app.put()) 
-// delete route to delete a note DONE
-// invoke listen function on express app DONE
