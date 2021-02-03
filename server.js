@@ -27,6 +27,7 @@ app.post('/api/notes', (req, res) => {
   noteArr.push(req.body);
   const data = JSON.stringify(noteArr);
   fs.writeFileSync('./Develop/db/db.json', data, function(err) {console.log(err)});
+  res.end();
 });
 
 // get all notes
@@ -46,7 +47,7 @@ app.delete(`/api/notes/:id`, (req, res) => {
   const delNote = noteArrDel.filter(note => note.id !== req.params.id);
   console.log(delNote);
   fs.writeFileSync('./Develop/db/db.json', JSON.stringify(delNote), function(err) {console.log(err)});
-
+  res.end();
   //console.log(noteArrDel);
 })
 
