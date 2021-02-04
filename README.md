@@ -40,7 +40,7 @@ To run tests, run the following command:
       
 ## Questions
 
-For questions regarding this repo contact me at charlie.bateman117@gmail.com or visit my repository at Clatrobe00
+For questions regarding this repo contact me at charlie.bateman117@gmail.com or visit my repository at github.com/Clatrobe00
 
 ## License
 
